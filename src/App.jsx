@@ -1,10 +1,9 @@
- function App() {
+import MainComponent from "./components/Routes";
 
-  return (
-    <>
-      <div className="bg-gray-100 text-4xl justi">Hello Netflix</div>
-    </>
-  )
+function App() {
+  return (  
+      <MainComponent />
+  );
 }
 
-export default App
+export default App;
