@@ -1,4 +1,4 @@
-import MainComponent from "./components/Routes";
+import MainComponent from "./components/MainComponent";
 
 function App() {
   return (  
