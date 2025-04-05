@@ -1,22 +1,60 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Header from "./Header";
 import {
   validateEmailOrNumber,
   validatePassword,
 } from "./utils/ValidateFields";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "./utils/Firebase";
+import { addUser } from "./utils/userSlice";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(false);
+  const [fullName, setFullName] = useState("");
   const [emailOrNumber, setEmailOrNumber] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     const checkEmail = validateEmailOrNumber(emailOrNumber);
     const checkPassword = validatePassword(password);
     if (!(checkEmail && checkPassword)) return;
-    console.log(emailOrNumber, password);
+
+    if (isLogin) {
+      createUserWithEmailAndPassword(auth, emailOrNumber, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          navigate('/browse')
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrors({
+            ...errors,
+            apiErr: errorCode + " - " + errorMessage,
+          });
+        });
+    } else {
+      signInWithEmailAndPassword(auth, emailOrNumber, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          navigate('/browse')
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrors({
+            ...errors,
+            apiErr: errorCode + " - " + errorMessage,
+          });
+        });
+    }
   };
 
   return (
@@ -30,6 +68,15 @@ const Login = () => {
           <p className="text-2xl my-4 font-bold my-">
             {isLogin ? "Sign up" : "Sign In"}
           </p>
+          {isLogin && (
+            <input
+              className="border-1 border-gray m-2 p-3 w-full rounded-sm"
+              type="text"
+              placeholder="Full name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+          )}
           <input
             className="border-1 border-gray m-2 p-3 w-full rounded-sm"
             type="text"
@@ -63,6 +110,12 @@ const Login = () => {
           {errors.password && (
             <p color="red" className="text-red-600 mb-1">
               {errors.password}
+            </p>
+          )}
+
+          {errors.apiErr && (
+            <p color="red" className="text-red-600 mb-1">
+              {errors.apiErr}
             </p>
           )}
           <button
