@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 
 const Accordion = ({ title, data, expended, setExpended }) => {
   return (
-    <div className="py-4 w-9/12 m-auto  text-white font-bold">
+    <div className="py-4 mx-12 m-auto  text-white font-bold">
       <div>
         <h2 className="text-3xl my-4">{title}</h2>
         {data?.map((item) => (
