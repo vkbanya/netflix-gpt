@@ -1,15 +1,19 @@
-import React from 'react'
-import Header from './Header'
+import React from "react";
+import Header from "./Header";
+import UseRecentMovies from "./hooks/UseRecentMovies";
+import MainContainer from "./utils/MainContainer";
+import SecondaryContainer from "./utils/SecondaryContainer";
 
 const Browse = () => {
+  UseRecentMovies();
+
   return (
     <>
-    <Header/>
-    <div className='text-white'>
-      Browse
-    </div>
+      <Header />
+      <MainContainer />
+      <SecondaryContainer />
     </>
-  )
-}
+  );
+};
 
-export default Browse
+export default Browse;

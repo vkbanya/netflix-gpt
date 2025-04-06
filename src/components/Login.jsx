@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import Header from "./Header";
 import {
   validateEmailOrNumber,
@@ -8,9 +8,11 @@ import {
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "./utils/Firebase";
 import { addUser } from "./utils/userSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [loginForm, setLoginForm] = useState(true);
@@ -18,7 +20,7 @@ const Login = () => {
   const [emailOrNumber, setEmailOrNumber] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {
     const checkEmail = validateEmailOrNumber(emailOrNumber);
@@ -29,7 +31,27 @@ const Login = () => {
       createUserWithEmailAndPassword(auth, emailOrNumber, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          navigate("/browse");
+          updateProfile(user, {
+            displayName: fullName,
+            photoURL: "",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+            })
+            .catch((error) => {
+              setErrors({
+                ...errors,
+                apiErr: error,
+              });
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -44,7 +66,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -139,7 +160,11 @@ const Login = () => {
             <p className="my-2">
               {loginForm ? "New to Netflix? " : "Already registered? "}
               <Link onClick={() => setLoginForm(!loginForm)}>
-                {loginForm ? "Sign up now." : "Sign In"}
+                {loginForm ? (
+                  <span className="font-bold">Sign up now.</span>
+                ) : (
+                  <span className="font-bold">Sign In</span>
+                )}
               </Link>
             </p>
           </form>
