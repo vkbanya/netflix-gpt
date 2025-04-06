@@ -1,12 +1,10 @@
-import React from 'react'
-import { movieImgUrl } from './utils/Constant'
+import React from "react";
+import { movieImgUrl } from "./utils/Constant";
 
-const MovieCard = ({path}) => {
+const MovieCard = ({ path }) => {
   return (
-    <div className=''>
-      <img alt='Movie card' src={movieImgUrl+path}/>
-    </div>
-  )
-}
+      <img className="w-40 mx-1" alt="Movie card" src={movieImgUrl + path} />
+  );
+};
 
-export default MovieCard
+export default MovieCard;
