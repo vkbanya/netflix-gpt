@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import Accordion from "./utils/Accordion";
+import Accordion from "./Accordion";
 
 const Faqs = () => {
   const [expended, setExpended] = useState(-1);

@@ -1,11 +1,10 @@
 import React from "react";
-import UseMovieTrailer from "../hooks/UseMovieTrailer";
+import UseMovieTrailer from "./hooks/UseMovieTrailer";
 import { useSelector } from "react-redux";
 
 const VideoBackground = ({ movieId }) => {
   UseMovieTrailer(movieId);
   const trailerVideo = useSelector((store) => store.movies.trailerVideo);
-  console.log(trailerVideo);
 
   return (
     <div>
@@ -17,7 +16,8 @@ const VideoBackground = ({ movieId }) => {
           "?autoplay=1&mute=1"
         }
         title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share"
+        // allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       ></iframe>
     </div>
   );
