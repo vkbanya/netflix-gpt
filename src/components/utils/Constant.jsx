@@ -12,4 +12,10 @@ export const API_options = {
   },
 };
 
-export const movieImgUrl='https://image.tmdb.org/t/p/w500/'
+export const movieImgUrl = "https://image.tmdb.org/t/p/w500/";
+
+export const supportedLanguage = [
+  { identifier: "en", name: "English" },
+  { identifier: "hi", name: "Hindi" },
+  { identifier: "sp", name: "Spanish" },
+];

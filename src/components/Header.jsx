@@ -4,11 +4,17 @@ import { useNavigate } from "react-router";
 import { auth } from "./utils/Firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { addUser, removeUser } from "./utils/userSlice";
+import { toggleGPTSearchView } from "./utils/gptSlice";
+import { supportedLanguage } from "./utils/Constant";
+import { changeLanguage } from "./utils/configSlice";
+import { LangConstants } from "./LangConstants";
 
 const Header = ({ hideBtn = false }) => {
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const showGPTSearch = useSelector((store) => store.gpt.showGPTSearch);
   const dispatch = useDispatch();
+  const lang = useSelector((store) => store.config.lang);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -38,34 +44,56 @@ const Header = ({ hideBtn = false }) => {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
+  };
+
+  const handleGPTToggle = () => {
+    dispatch(toggleGPTSearchView());
+  };
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
   };
 
   return (
     <div className="bg-gradient-to-b from-black">
-      <div className="mx-12 my-2 flex justify-between items-center">
+      <div className="mx-12 flex justify-between items-center">
         <img className="w-44" alt="logo" src={"./Netflix_Logo.png"} />
 
         {!hideBtn && (
           <div>
             {user ? (
               <div>
-                {/* <div className="text-white mask-radial-at-center mask-radial-from-100% bg-[url("></div> */}
+                <select
+                  onChange={handleLanguageChange}
+                  className="text-white border-2 px-2 h-8 w-28 rounded-4xl cursor-pointer mr-1"
+                >
+                  {supportedLanguage?.map((lang) => (
+                    <option key={lang.identifier} value={lang.identifier}>
+                      {lang.name}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  className="text-white h-8 w-28 mr-2 rounded-4xl cursor-pointer"
+                  onClick={() => handleGPTToggle()}
+                >
+                  {showGPTSearch ? LangConstants[lang].homepage: LangConstants[lang].gptSearch}
+                </button>
                 <span className="text-white mr-4">{user?.displayName}</span>
                 <button
-                  className=" bg-white h-8 w-20 rounded-4xl cursor-pointer"
+                  className=" bg-white h-8 w-24 rounded-4xl cursor-pointer"
                   onClick={() => handleSignOut()}
                 >
-                  Sign out
+                 {LangConstants[lang].signOut}
                 </button>
               </div>
             ) : (
               <button
-                className=" bg-white h-8 w-20 rounded-4xl cursor-pointer"
+                className="bg-white h-8 w-24 rounded-4xl cursor-pointer"
                 onClick={() => navigate("/login")}
               >
-                Sign in
+               {LangConstants[lang].signIn}
               </button>
             )}
           </div>

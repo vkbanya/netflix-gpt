@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div className="h-80 w-full py-8 bg-black text-white">
       <div className="mx-12 m-auto">
-        <div className="mb-12">Question? call Sachin</div>
+        <div className="mb-12">Question? call 9876543210</div>
 
         <ul className="grid grid-cols-4">
           <li className="mb-4">

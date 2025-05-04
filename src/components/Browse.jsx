@@ -7,6 +7,8 @@ import Footer from "./Footer";
 import UsePopularMovies from "./hooks/UsePopularMovies";
 import UseTopRatedMovies from "./hooks/UseTopRatedMovies";
 import UseUpcomingMovies from "./hooks/UseUpcomingMovies";
+import GPTSearch from "./GPTSearch";
+import { useSelector } from "react-redux";
 
 const Browse = () => {
   UseRecentMovies();
@@ -14,14 +16,23 @@ const Browse = () => {
   UseTopRatedMovies();
   UseUpcomingMovies();
 
+  const showGPTSearch = useSelector((store) => store.gpt.showGPTSearch);
+
   return (
     <>
-    <div className="absolute w-screen z-10">
-      <Header />
-    </div>
-      <MainContainer />
-      <SecondaryContainer />
-      <Footer/>
+      <div className="absolute w-screen z-10">
+        <Header />
+      </div>
+      
+      {showGPTSearch ? (
+        <GPTSearch />
+      ) : (
+        <>
+          <MainContainer />
+          <SecondaryContainer />
+        </>
+      )}
+      <Footer />
     </>
   );
 };
