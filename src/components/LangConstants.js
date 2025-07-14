@@ -2,7 +2,7 @@ export const LangConstants = {
   en: {
     search: "Search",
     gptSearchPlaceholderTxt: "What would you like to watch today?",
-    homePage: "Homepage",
+    homepage: "Homepage",
     gptSearch: "GPT search",
     signIn: "Sign in",
     signOut: "Sign out",
@@ -10,7 +10,7 @@ export const LangConstants = {
   hi: {
     search: "खोज",
     gptSearchPlaceholderTxt: "आज आप क्या देखना चाहेंगे?",
-    homePage: "मुखपृष्ठ",
+    homepage: "मुखपृष्ठ",
     gptSearch: "जीपीटी खोज",
     signIn: "दाखिल करना",
     signOut: "साइन आउट",
@@ -18,7 +18,7 @@ export const LangConstants = {
   sp: {
     search: "Buscar",
     gptSearchPlaceholderTxt: "¿Qué te gustaría ver hoy?",
-    homePage: "Página principal",
+    homepage: "Página principal",
     gptSearch: "búsqueda GPT",
     signIn: "Iniciar sesión",
     signOut: "desconectar",

@@ -7,41 +7,41 @@ const Footer = () => {
       <div className="mx-12 m-auto">
         <div className="mb-12">Question? call 9876543210</div>
 
-        <ul className="grid grid-cols-4">
-          <li className="mb-4">
+        <ul className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <li>
             <Link to="/faq">FAQs</Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link to="/helpCentre">Help centre</Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link to="/termOfUse">Term of use</Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link to="/faq">FAQs</Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link to="/helpCentre">Help centre</Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link to="/termOfUse">Term of use</Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link to="/faq">FAQs</Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link to="/helpCentre">Help centre</Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link to="/termOfUse">Term of use</Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link to="/contactUs">Contact us</Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link to="/privacy">Privacy</Link>
           </li>
-          <li className="mb-4">
+          <li>
             <Link to="/account">Account</Link>
           </li>
         </ul>

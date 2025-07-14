@@ -4,11 +4,11 @@ const Accordion = ({ title, data, expended, setExpended }) => {
   return (
     <div className="py-4 mx-12 m-auto  text-white font-bold">
       <div>
-        <h2 className="text-3xl my-4">{title}</h2>
+        <h2 className="md:text-3xl my-4">{title}</h2>
         {data?.map((item) => (
           <Fragment key={item.id}>
             <button
-              className="w-full text-left border-0 py-8 px-4 my-1 rounded-2xl bg-[rgba(255,255,255,0.1)] cursor-pointer hover:bg-[rgba(255,255,255,0.2)] flex justify-between items-center"
+              className="w-full text-left border-0 py-6 md:py-8 px-4 my-2 rounded-2xl bg-[rgba(255,255,255,0.1)] cursor-pointer hover:bg-[rgba(255,255,255,0.2)] flex justify-between items-center"
               onClick={() =>
                 item.id === expended ? setExpended(-1) : setExpended(item.id)
               }

@@ -20,7 +20,7 @@ const Browse = () => {
 
   return (
     <>
-      <div className="absolute w-screen z-10">
+      <div className="w-screen z-10">
         <Header />
       </div>
       

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router";
 import Header from "./Header";
 import {
+  validationName,
   validateEmailOrNumber,
   validatePassword,
 } from "./utils/ValidateFields";
@@ -20,14 +21,17 @@ const Login = () => {
   const [emailOrNumber, setEmailOrNumber] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
+    const name = validationName(fullName);
     const checkEmail = validateEmailOrNumber(emailOrNumber);
     const checkPassword = validatePassword(password);
-    if (!(checkEmail && checkPassword)) return;
-
+    
+    setLoading(true);
     if (!loginForm) {
+      if (!(name && checkEmail && checkPassword)) return;
       createUserWithEmailAndPassword(auth, emailOrNumber, password)
         .then((userCredential) => {
           const user = userCredential.user;
@@ -61,7 +65,9 @@ const Login = () => {
             apiErr: errorCode + " - " + errorMessage,
           });
         });
+      setLoading(false);
     } else {
+      if (!(checkEmail && checkPassword)) return;
       signInWithEmailAndPassword(auth, emailOrNumber, password)
         .then((userCredential) => {
           // Signed in
@@ -75,14 +81,14 @@ const Login = () => {
             apiErr: errorCode + " - " + errorMessage,
           });
         });
+      setLoading(false);
     }
   };
-
   return (
-    <div className="bg-[url('./Bg_image.jpg')] h-210 shadow-black">
+    <div className="bg-[url('assets/BgImage.jpg')] h-210 shadow-black">
       <Header hideBtn />
       <div className="justify-items-center content-center">
-        <div className="w-4/12 bg-black opacity-85 py-8 shadow-4xl">
+        <div className="w-[90%] md:w-1/3 m-auto h-[30em] bg-black opacity-85 py-8 shadow-4xl">
           <form
             onSubmit={(e) => e.preventDefault()}
             className="w-10/12 my-6 m-auto text-white text-center"
@@ -92,15 +98,26 @@ const Login = () => {
             </p>
             {!loginForm && (
               <input
-                className="border-1 border-gray m-2 p-3 w-full rounded-sm"
+                className="border-1 border-gray m-2 p-3 w-full rounded-sm mb-2"
                 type="text"
                 placeholder="Full name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
+                onBlur={(e) =>
+                  !validationName(e.target.value)
+                    ? setErrors({
+                        ...errors,
+                        fullName: "Invalid name",
+                      })
+                    : setErrors({ ...errors, fullName: false })
+                }
               />
             )}
+            {errors.fullName && (
+              <p className="text-red-600 mb-1">{errors.fullName}</p>
+            )}
             <input
-              className="border-1 border-gray m-2 p-3 w-full rounded-sm"
+              className="border-1 border-gray m-2 p-3 w-full rounded-sm mb-2"
               type="text"
               placeholder="Email or mobile number"
               value={emailOrNumber}
@@ -118,7 +135,7 @@ const Login = () => {
               <p className="text-red-600 mb-1">{errors.emailOrNumber}</p>
             )}
             <input
-              className="border-1 border-gray m-2 p-3 w-full rounded-sm"
+              className="border-1 border-gray m-2 p-3 w-full rounded-sm mb-2"
               type="password"
               placeholder="Password"
               value={password}
@@ -142,21 +159,11 @@ const Login = () => {
             )}
             <button
               type="submit"
-              className="p-2 m-2 bg-red-600 rounded-sm w-full cursor-pointer"
+              className="p-2 mt-8 m-2 bg-red-600 rounded-sm w-full cursor-pointer"
               onClick={() => handleSubmit()}
             >
               {loginForm ? "Sign In" : "Sign up"}
             </button>
-            <p>OR</p>
-            <button className="p-2 m-2 bg-gray-600 rounded-sm w-full cursor-pointer">
-              Use a sign-in code
-            </button>
-            <p className="my-2">Forgot password?</p>
-
-            <span className="my-2">
-              <input className="mr-2" type="checkbox" />
-              <span>Remember me</span>
-            </span>
             <p className="my-2">
               {loginForm ? "New to Netflix? " : "Already registered? "}
               <Link onClick={() => setLoginForm(!loginForm)}>
