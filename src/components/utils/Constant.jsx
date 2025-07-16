@@ -1,6 +1,6 @@
 export const access_token =import.meta.env.VITE_TOKEN
 
-export const API_key = "92a29122b55d2cf2fb6b4bcbf7ca81eb";
+// export const API_key = "92a29122b55d2cf2fb6b4bcbf7ca81eb";
 
 export const API_options = {
   method: "GET",
